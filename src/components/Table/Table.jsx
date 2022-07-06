@@ -1,5 +1,10 @@
+import { useState } from 'react';
+import { useEffect } from 'react';
+
 export default props => {
-	const { data } = props;
+	const { regex, data } = props;
+	const [filteredData, setFilteredData] = useState(data);
+
 	const columns = [
 		'ID',
 		'Name',
@@ -9,6 +14,20 @@ export default props => {
 		'Author',
 		'Actions',
 	];
+
+	useEffect(() => {
+		if (!regex) setFilteredData(data);
+		if (regex) {
+			const filteredArr = data.filter(
+				book =>
+					book.name.match(regex) ||
+					book.authorName.match(regex) ||
+					book.id.toString().match(regex)
+			);
+
+			setFilteredData(filteredArr);
+		}
+	}, [regex, data]);
 
 	return (
 		<table className="table">
@@ -20,7 +39,7 @@ export default props => {
 				</tr>
 			</thead>
 			<tbody>
-				{data.map(book => {
+				{filteredData.map(book => {
 					return (
 						<tr key={book.id}>
 							<td data-label={columns[0]}>{book.id}</td>

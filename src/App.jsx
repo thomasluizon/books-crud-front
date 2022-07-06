@@ -12,6 +12,9 @@ async function fetchApi(url, obj = {}) {
 
 function App() {
 	const [data, setData] = useState([]);
+	const [value, setValue] = useState('');
+	const [regex, setRegex] = useState(false);
+
 	const url = 'https://books-crud-back.herokuapp.com';
 
 	useEffect(() => {
@@ -21,12 +24,21 @@ function App() {
 		})();
 	}, []);
 
+	const handleSearch = event => {
+		const inputValue = event.target.value;
+		setValue(inputValue);
+		let regex = new RegExp(inputValue, 'gi');
+
+		if (inputValue === '') regex = false;
+		setRegex(regex);
+	};
+
 	return (
 		<>
 			<Container>
 				<Header />
-				<Search />
-				<Table data={data} />
+				<Search value={value} handleSearch={handleSearch} />
+				<Table data={data} regex={regex} />
 			</Container>
 		</>
 	);
