@@ -4,15 +4,22 @@ import Button from '../Button/Button';
 import AuthorMenu from '../AuthorMenu/AuthorMenu';
 
 export default props => {
-	const [name, setName] = useState(props.actualBook?.name || '');
+	const [authorId, setAuthorId] = useState('');
+	const [name, setName] = useState(
+		props.actualBook?.name || props.actualAuthor?.name || ''
+	);
 	const [price, setPrice] = useState(props.actualBook?.price || '');
 	const [quantity, setQuantity] = useState(props.actualBook?.quantity || '');
 	const [gender, setGender] = useState(props.actualBook?.gender || '');
 	const [author, setAuthor] = useState(props.actualBook?.authorName || '');
 	const { editingState } = props;
 
-	const book = {
-		id: props.actualBook.id || undefined,
+	const payload = {
+		id:
+			props.actualBook?.id ||
+			props.actualAuthor?.id ||
+			authorId ||
+			undefined,
 		name,
 		price,
 		quantity,
@@ -22,22 +29,40 @@ export default props => {
 
 	return (
 		<form
-			onSubmit={e => props.handleSave(book, e)}
+			onSubmit={e =>
+				editingState === 'deleteAuthor'
+					? props.handleDelete(authorId, 'authors', e)
+					: props.handleSave(payload, e)
+			}
 			className="edit-container"
 		>
+			{editingState === 'deleteAuthor' && (
+				<AuthorMenu
+					label="Author"
+					authors={props.authors}
+					setValue={setAuthor}
+					selectedAuthor={author}
+					setAuthor={setAuthor}
+					setAuthorId={setAuthorId}
+				/>
+			)}
+
 			{editingState !== 'create' && editingState !== 'createAuthor' ? (
 				<EditInput
 					label="Id"
 					readOnly={true}
-					value={props.actualBook?.id}
+					value={props.actualBook?.id || props.actualAuthor.id || authorId}
 				/>
 			) : (
 				''
 			)}
+			{editingState !== 'deleteAuthor' && (
+				<EditInput label="Name" value={name} setValue={setName} />
+			)}
 
-			<EditInput label="Name" value={name} setValue={setName} />
-
-			{editingState !== 'createAuthor' ? (
+			{editingState !== 'createAuthor' &&
+			editingState !== 'editingAuthor' &&
+			editingState !== 'deleteAuthor' ? (
 				<>
 					<EditInput label="Price" value={price} setValue={setPrice} />
 					<EditInput
@@ -59,8 +84,18 @@ export default props => {
 			)}
 
 			<div className="button-container">
-				<Button onClick={() => props.setIsEditing(false)}>Cancel</Button>
-				<Button type="submit">Save</Button>
+				<Button
+					onClick={() => {
+						props.setIsEditing(false);
+						props.setActualAuthor(false);
+						props.setActualBook(false);
+					}}
+				>
+					Cancel
+				</Button>
+				<Button type="submit">
+					{editingState === 'deleteAuthor' ? 'Delete' : 'Save'}
+				</Button>
 			</div>
 		</form>
 	);

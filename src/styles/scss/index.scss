@@ -41,3 +41,18 @@ body {
 	display: grid;
 	place-items: center;
 }
+
+.overflow-table {
+	* {
+		overflow: hidden;
+		max-width: 200px;
+	}
+	overflow: hidden;
+
+	@media screen and (max-width: 768px) {
+		overflow: unset;
+		* {
+			max-width: unset;
+		}
+	}
+}

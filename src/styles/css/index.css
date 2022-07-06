@@ -24,10 +24,16 @@
   display: flex;
   gap: 1rem;
 }
-@media screen and (max-width: 360px) {
+@media screen and (max-width: 470px) {
   .header h1,
 .header button {
     font-size: 0.8rem;
+  }
+  .header__btn-wrapper {
+    gap: 0.5rem;
+  }
+  .header__btn-wrapper button {
+    padding: 0.5rem;
   }
 }
 
@@ -205,4 +211,20 @@ body {
   width: 100%;
   display: grid;
   place-items: center;
+}
+
+.overflow-table {
+  overflow: hidden;
+}
+.overflow-table * {
+  overflow: hidden;
+  max-width: 200px;
+}
+@media screen and (max-width: 768px) {
+  .overflow-table {
+    overflow: unset;
+  }
+  .overflow-table * {
+    max-width: unset;
+  }
 }/*# sourceMappingURL=index.css.map */

@@ -9,6 +9,9 @@ export default props => {
 				<Button onClick={() => props.handleCreate('author')}>
 					Add Author
 				</Button>
+				<Button onClick={() => props.handleDeleteAuthor()}>
+					Delete Author
+				</Button>
 			</div>
 		</header>
 	);

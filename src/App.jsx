@@ -18,8 +18,8 @@ function App() {
 	const [isEditing, setIsEditing] = useState(false);
 	const [editingState, setEditingState] = useState('');
 	const [actualBook, setActualBook] = useState(false);
+	const [actualAuthor, setActualAuthor] = useState(false);
 	const [authors, setAuthors] = useState([]);
-
 	const url = 'https://books-crud-back.herokuapp.com';
 
 	async function getBooks() {
@@ -48,6 +48,7 @@ function App() {
 
 	const handleCreate = type => {
 		setActualBook(false);
+		setActualAuthor(false);
 		setEditingState('create');
 		if (type === 'author') setEditingState('createAuthor');
 
@@ -60,11 +61,18 @@ function App() {
 		setIsEditing(true);
 	};
 
-	const handleDelete = async id => {
-		await fetch(url + `/books/${id}`, { method: 'DELETE' });
+	const handleDelete = async (id, type, event) => {
+		if (event) event.preventDefault();
 
-		getBooks();
-		getAuthors();
+		const res = await fetch(url + `/${type}/${id}`, { method: 'DELETE' });
+
+		if (res.ok) {
+			setIsEditing(false);
+			getBooks();
+			getAuthors();
+		} else {
+			alert(`${res.status}: ${res.statusText}`);
+		}
 	};
 
 	function checkIfInputIsNumber(value) {
@@ -136,6 +144,18 @@ function App() {
 			});
 		}
 
+		if (editingState === 'editingAuthor') {
+			const obj = {
+				name: payload.name,
+			};
+
+			res = await fetch(url + `/authors/${payload.id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(obj),
+			});
+		}
+
 		if (res.ok) {
 			setIsEditing(false);
 			getBooks();
@@ -145,27 +165,46 @@ function App() {
 		}
 	};
 
+	const handleAuthorChange = (id, name) => {
+		setActualAuthor({ id, name });
+		setEditingState('editingAuthor');
+		setIsEditing(true);
+	};
+
+	const handleDeleteAuthor = () => {
+		setEditingState('deleteAuthor');
+		setIsEditing(true);
+	};
+
 	return (
 		<>
 			<Container>
 				{!isEditing ? (
 					<>
-						<Header handleCreate={handleCreate} />
+						<Header
+							handleDeleteAuthor={handleDeleteAuthor}
+							handleCreate={handleCreate}
+						/>
 						<Search value={value} handleSearch={handleSearch} />
 						<Table
 							data={data}
 							regex={regex}
 							handleClickEdit={handleClickEdit}
 							handleDelete={handleDelete}
+							handleAuthorChange={handleAuthorChange}
 						/>
 					</>
 				) : (
 					<Edit
 						actualBook={actualBook}
+						setActualBook={setActualBook}
+						setActualAuthor={setActualAuthor}
+						actualAuthor={actualAuthor}
 						editingState={editingState}
 						setIsEditing={setIsEditing}
 						handleSave={handleSave}
 						authors={authors}
+						handleDelete={handleDelete}
 					/>
 				)}
 			</Container>

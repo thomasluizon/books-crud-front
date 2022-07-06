@@ -13,10 +13,17 @@
 		gap: 1rem;
 	}
 
-	@media screen and (max-width: 360px) {
+	@media screen and (max-width: 470px) {
 		h1,
 		button {
 			font-size: 0.8rem;
+		}
+
+		&__btn-wrapper {
+			gap: 0.5rem;
+			button {
+				padding: 0.5rem;
+			}
 		}
 	}
 }
