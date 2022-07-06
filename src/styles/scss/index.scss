@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;400;700&display=swap');
+@import '../../components/Container/container';
+@import '../../components/Header/header';
+@import '../../components/Button/button';
+@import '../../components/Table/table';
+
+*,
+*::before,
+*::after {
+	font-family: 'Poppins', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	border: none;
+	outline: none;
+	font-size: 1rem;
+	font-weight: normal;
+	background: none;
+}
+
+body {
+	background: rgb(9, 120, 177);
+	background: linear-gradient(
+		90deg,
+		rgba(9, 120, 177, 1) 0%,
+		rgba(7, 128, 196, 1) 57%,
+		rgba(0, 212, 255, 1) 100%
+	);
+}
+
+#root {
+	min-height: 100vh;
+	height: 100%;
+	width: 100%;
+	display: grid;
+	place-items: center;
+}
