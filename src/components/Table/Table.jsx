@@ -1,30 +1,35 @@
 export default props => {
 	const { data } = props;
+	const columns = [
+		'ID',
+		'Name',
+		'Price',
+		'Quantity',
+		'Gender',
+		'Author',
+		'Actions',
+	];
 
 	return (
 		<table className="table">
 			<thead>
 				<tr>
-					<th>ID</th>
-					<th>Name</th>
-					<th>Price</th>
-					<th>Quantity</th>
-					<th>Gender</th>
-					<th>Author</th>
-					<th>Actions</th>
+					{columns.map(column => (
+						<th>{column}</th>
+					))}
 				</tr>
 			</thead>
 			<tbody>
 				{data.map(book => {
 					return (
 						<tr key={book.id}>
-							<td data-label="ID">{book.id}</td>
-							<td data-label="Name">{book.name}</td>
-							<td data-label="Price">{book.price}</td>
-							<td data-label="Quantity">{book.quantity}</td>
-							<td data-label="Gender">{book.gender}</td>
-							<td data-label="Author">{book.authorName}</td>
-							<td data-label="Actions">
+							<td data-label={columns[0]}>{book.id}</td>
+							<td data-label={columns[1]}>{book.name}</td>
+							<td data-label={columns[2]}>{book.price}</td>
+							<td data-label={columns[3]}>{book.quantity}</td>
+							<td data-label={columns[4]}>{book.gender}</td>
+							<td data-label={columns[5]}>{book.authorName}</td>
+							<td data-label={columns[6]}>
 								<button>
 									<i className="bi bi-pencil-square"></i>
 								</button>

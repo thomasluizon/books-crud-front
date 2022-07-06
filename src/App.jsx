@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Container from './components/Container/Container';
 import Header from './components/Header/Header';
+import Search from './components/Search/Search';
 import Table from './components/Table/Table';
 
 async function fetchApi(url, obj = {}) {
@@ -24,6 +25,7 @@ function App() {
 		<>
 			<Container>
 				<Header />
+				<Search />
 				<Table data={data} />
 			</Container>
 		</>

@@ -24,6 +24,12 @@
   display: flex;
   gap: 1rem;
 }
+@media screen and (max-width: 360px) {
+  .header h1,
+.header button {
+    font-size: 0.8rem;
+  }
+}
 
 .btn {
   background: linear-gradient(90deg, rgb(9, 120, 177) 0%, rgb(7, 128, 196) 57%, rgb(0, 149, 255) 100%);
@@ -100,6 +106,18 @@
     width: 100%;
   }
 }
+.search {
+  border: 1px solid rgb(0, 44, 105);
+  border-radius: 0.25rem;
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  gap: 1rem;
+}
+.search input {
+  flex: 1;
+}
+
 *,
 *::before,
 *::after {
