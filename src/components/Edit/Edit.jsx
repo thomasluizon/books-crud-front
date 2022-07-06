@@ -70,7 +70,7 @@ export default props => {
 						value={quantity}
 						setValue={setQuantity}
 					/>
-					<EditInput label="Gender" value={gender} setValue={setGender} />
+					<EditInput label="Genre" value={gender} setValue={setGender} />
 					<AuthorMenu
 						label="Author"
 						authors={props.authors}
