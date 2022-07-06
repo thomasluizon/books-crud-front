@@ -1,0 +1,41 @@
+.author-menu {
+	margin: 1rem 0;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	position: relative;
+
+	button {
+		width: 30%;
+		min-width: 150px;
+		cursor: pointer;
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		border: 1px solid rgb(0, 44, 105);
+		padding: 0.5rem 1rem;
+		border-radius: 0.25rem;
+	}
+
+	nav {
+		position: absolute;
+		right: 45%;
+		border: 1px solid rgb(0, 44, 105);
+		border-radius: 0.25rem;
+		height: 100%;
+		overflow: hidden;
+		overflow-y: visible;
+		background: white;
+		@media screen and (max-width: 768px) {
+			right: 0;
+		}
+		li {
+			padding: 0.5rem;
+			cursor: default;
+
+			&:hover {
+				background: rgb(186, 184, 184);
+			}
+		}
+	}
+}

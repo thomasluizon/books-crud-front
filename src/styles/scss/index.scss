@@ -4,6 +4,9 @@
 @import '../../components/Button/button';
 @import '../../components/Table/table';
 @import '../../components/Search/search';
+@import '../../components/Edit/edit';
+@import '../../components/EditInput/editinput';
+@import '../../components/AuthorMenu/authormenu';
 
 *,
 *::before,
@@ -17,6 +20,8 @@
 	font-size: 1rem;
 	font-weight: normal;
 	background: none;
+	list-style: none;
+	text-decoration: none;
 }
 
 body {

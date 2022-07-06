@@ -1,3 +1,11 @@
 export default props => {
-	return <button className="btn">{props.children}</button>;
+	return (
+		<button
+			type={props.type || 'button'}
+			onClick={props.onClick}
+			className="btn"
+		>
+			{props.children}
+		</button>
+	);
 };

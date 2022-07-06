@@ -10,7 +10,7 @@ export default props => {
 		'Name',
 		'Price',
 		'Quantity',
-		'Gender',
+		'Genre',
 		'Author',
 		'Actions',
 	];
@@ -22,7 +22,8 @@ export default props => {
 				book =>
 					book.name.match(regex) ||
 					book.authorName.match(regex) ||
-					book.id.toString().match(regex)
+					book.id.toString().match(regex) ||
+					book.gender.match(regex)
 			);
 
 			setFilteredData(filteredArr);
@@ -33,8 +34,8 @@ export default props => {
 		<table className="table">
 			<thead>
 				<tr>
-					{columns.map(column => (
-						<th>{column}</th>
+					{columns.map((column, i) => (
+						<th key={i}>{column}</th>
 					))}
 				</tr>
 			</thead>
@@ -49,10 +50,10 @@ export default props => {
 							<td data-label={columns[4]}>{book.gender}</td>
 							<td data-label={columns[5]}>{book.authorName}</td>
 							<td data-label={columns[6]}>
-								<button>
+								<button onClick={() => props.handleClickEdit(book)}>
 									<i className="bi bi-pencil-square"></i>
 								</button>
-								<button>
+								<button onClick={() => props.handleDelete(book.id)}>
 									<i className="bi bi-x-circle"></i>
 								</button>
 							</td>
