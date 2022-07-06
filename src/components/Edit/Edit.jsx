@@ -44,6 +44,7 @@ export default props => {
 					selectedAuthor={author}
 					setAuthor={setAuthor}
 					setAuthorId={setAuthorId}
+					deleting={true}
 				/>
 			)}
 

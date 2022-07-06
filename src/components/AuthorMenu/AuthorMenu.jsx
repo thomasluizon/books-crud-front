@@ -23,7 +23,7 @@ export default props => {
 								<li
 									onClick={() => {
 										props.setAuthor(author.name);
-										props.setAuthorId(author.id);
+										if (props.deleting) props.setAuthorId(author.id);
 										setMenuOpen(false);
 									}}
 									key={author.id}
