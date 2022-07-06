@@ -56,7 +56,7 @@ function App() {
 
 	const handleClickEdit = book => {
 		setActualBook(book);
-		setEditingState('editing');
+		setEditingState('editingBook');
 		setIsEditing(true);
 	};
 
@@ -71,27 +71,27 @@ function App() {
 		return parseInt(value) + 1 === parseInt(value) + 1;
 	}
 
-	const handleSave = async (book, event) => {
+	const handleSave = async (payload, event) => {
 		event.preventDefault();
-		if (
-			!checkIfInputIsNumber(book.price) ||
-			!checkIfInputIsNumber(book.quantity)
-		) {
-			alert('Wrong price or quantity');
-			return;
-		}
 
 		let res;
-		if (editingState === 'create') {
-			const obj = {
-				name: book.name,
-				price: parseInt(book.price),
-				quantity: parseInt(book.quantity),
-				gender: book.gender,
-				authorName: book.authorName,
-			};
 
-			console.log(obj);
+		if (editingState === 'create') {
+			if (
+				!checkIfInputIsNumber(payload.price) ||
+				!checkIfInputIsNumber(payload.quantity)
+			) {
+				alert('Wrong price or quantity');
+				return;
+			}
+
+			const obj = {
+				name: payload.name,
+				price: parseInt(payload.price),
+				quantity: parseInt(payload.quantity),
+				gender: payload.gender,
+				authorName: payload.authorName,
+			};
 
 			res = await fetch(url + '/books', {
 				method: 'POST',
@@ -100,9 +100,46 @@ function App() {
 			});
 		}
 
+		if (editingState === 'createAuthor') {
+			const obj = {
+				name: payload.name,
+			};
+
+			res = await fetch(url + '/authors', {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(obj),
+			});
+		}
+
+		if (editingState === 'editingBook') {
+			if (
+				!checkIfInputIsNumber(payload.price) ||
+				!checkIfInputIsNumber(payload.quantity)
+			) {
+				alert('Wrong price or quantity');
+				return;
+			}
+
+			const obj = {
+				name: payload.name,
+				price: parseInt(payload.price),
+				quantity: parseInt(payload.quantity),
+				gender: payload.gender,
+				authorName: payload.authorName,
+			};
+
+			res = await fetch(url + `/books/${payload.id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify(obj),
+			});
+		}
+
 		if (res.ok) {
 			setIsEditing(false);
 			getBooks();
+			getAuthors();
 		} else {
 			alert(`${res.status}: ${res.statusText}`);
 		}
